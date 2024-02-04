@@ -136,6 +136,14 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 0.48
       objectReference: {fileID: 0}
+    - target: {fileID: 7361339069459552128, guid: 7e211323cd3d74140b73abea69de4dce, type: 3}
+      propertyPath: <UsableTools>k__BackingField.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7361339069459552128, guid: 7e211323cd3d74140b73abea69de4dce, type: 3}
+      propertyPath: <UsableTools>k__BackingField.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8312646824312836952, guid: 7e211323cd3d74140b73abea69de4dce, type: 3}
       propertyPath: m_Name
       value: Weed Variant

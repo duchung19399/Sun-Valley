@@ -15,7 +15,7 @@ namespace FarmGame.Interact {
             }
         }
 
-        public IEnumerable<PickUpInteraction> PerformDetection() {
+        public IEnumerable<IInteractable> PerformDetection() {
 
             Collider2D colliderResult = Physics2D.OverlapCircle(
                 (Vector2)transform.position + interactDirection * _interactionRadius,
@@ -23,10 +23,10 @@ namespace FarmGame.Interact {
                 _interactionLayerMask);
 
             if (colliderResult != null) {
-                return colliderResult.GetComponents<PickUpInteraction>();
+                return colliderResult.GetComponents<IInteractable>();
             }
 
-            return new List<PickUpInteraction>();
+            return new List<IInteractable>();
 
 
         }
