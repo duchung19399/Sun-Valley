@@ -24,7 +24,12 @@ namespace FarmGame.Agent {
         private void FarmPlayerInput_Interact(object sender, EventArgs e) {
             foreach (PickUpInteraction item in interactionDetector.PerformDetection()) {
                 if (item.CanInteract()) {
-                    item.Interact(this);
+                    agentMover.Stopped = true;
+                    agentAnimation.OnAnimationEnd.AddListener(() => {
+                        item.Interact(this);
+                        agentMover.Stopped = false;
+                    });
+                    agentAnimation.PlayAnimation(AnimationType.PickUp);
                 }
             }
         }

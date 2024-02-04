@@ -14,11 +14,19 @@ namespace FarmGame.Agent {
         [SerializeField]
         private CollisionDetector _collisionDetector;
 
+        private bool _stopped;
+        public bool Stopped {
+            get => _stopped;
+            set { _stopped = value; }
+        }
+
         internal void SetMoveVector(Vector2 moveVector) {
             this.moveVector = moveVector;
         }
 
         private void FixedUpdate() {
+            if (_stopped) return;
+
             Vector2 velocity = moveVector * moveSpeed;
             float distanceToMoveThisFrame = velocity.magnitude * Time.fixedDeltaTime;
             if (_collisionDetector.IsMovementValid(moveVector, distanceToMoveThisFrame) == false) {
