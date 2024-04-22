@@ -9,9 +9,12 @@ namespace FarmGame.Interact {
 
         [field: SerializeField]
         public List<ToolType> UsableTools { get; set; } = new List<ToolType>();
+
+        public UnityEngine.Events.UnityEvent OnPickUp;
         public bool CanInteract(Player agent) => UsableTools.Contains(agent.SelectedTool.ToolType);
         public void Interact(Player agent) {
             Destroy(gameObject);
+            OnPickUp.Invoke();
         }
     }
 }

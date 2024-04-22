@@ -11,10 +11,10 @@ namespace FarmGame.Tools {
         public override void UseTool(Player agent) {
             foreach (IInteractable item in agent.InteractionDetector.PerformDetection()) {
                 if (item.CanInteract(agent)) {
-                    agent.AgentMover.Stopped = true;
+                    agent.BlockedInput = true;
                     agent.AgentAnimation.OnAnimationEnd.AddListener(() => {
                         item.Interact(agent);
-                        agent.AgentMover.Stopped = false;
+                        agent.BlockedInput = false;
                     });
                     agent.AgentAnimation.PlayAnimation(AnimationType.PickUp);
                 }
