@@ -11,8 +11,8 @@ namespace FarmGame.Interact {
         public List<ToolType> UsableTools { get; set; } = new List<ToolType>();
 
         public UnityEngine.Events.UnityEvent OnPickUp;
-        public bool CanInteract(Player agent) => UsableTools.Contains(agent.SelectedTool.ToolType);
-        public void Interact(Player agent) {
+        public bool CanInteract(IAgent agent) => UsableTools.Contains(agent.SelectedTool.ToolType);
+        public void Interact(IAgent agent) {
             Destroy(gameObject);
             OnPickUp.Invoke();
         }

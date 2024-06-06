@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 726516c90cf7d22439f11558b66c6d9e, type: 3}
+  m_Name: ItemDatabase
+  m_EditorClassIdentifier: 
+  _cropDatabase: {fileID: 11400000, guid: 8dc1ce6d91f97e44d9ec8903ba225ac1, type: 2}
+  _gameItems:
+  - Name: Stone
+    ID: 0
+    Description: A Piece of rock
+    Image: {fileID: 1001558109, guid: d99c0fb10577989408ef7add914423fc, type: 3}
+    CanBeStacked: 1
+    MaxStackSize: 99
+    CanBeThrowAway: 1
+    Consumable: 0
+    EnergyBoost: 0
+    Price: 0
+    ToolType: 0
+    ToolRange: {x: 0, y: 0}
+    ToolAnimator: {fileID: 0}
+    CropTypeIndex: -1
+    Prefab: {fileID: 9002627262968807900, guid: 846ed7af86f770d4a803722e5989ae09, type: 3}
+  - Name: WoodLog
+    ID: 1
+    Description: A wood log
+    Image: {fileID: 282831475, guid: d99c0fb10577989408ef7add914423fc, type: 3}
+    CanBeStacked: 1
+    MaxStackSize: 99
+    CanBeThrowAway: 1
+    Consumable: 0
+    EnergyBoost: 0
+    Price: 0
+    ToolType: 0
+    ToolRange: {x: 0, y: 0}
+    ToolAnimator: {fileID: 0}
+    CropTypeIndex: -1
+    Prefab: {fileID: 2441768924200046755, guid: e30b4f6b7a517b545a847cb882c02e68, type: 3}
+  - Name: Weed
+    ID: 2
+    Description: Can eat for Energy
+    Image: {fileID: -1657548846, guid: d99c0fb10577989408ef7add914423fc, type: 3}
+    CanBeStacked: 1
+    MaxStackSize: 99
+    CanBeThrowAway: 1
+    Consumable: 1
+    EnergyBoost: 1
+    Price: 1
+    ToolType: 0
+    ToolRange: {x: 0, y: 0}
+    ToolAnimator: {fileID: 0}
+    CropTypeIndex: -1
+    Prefab: {fileID: 5045509850951396390, guid: 845ba2dcfe2f2bd49a70f715d420ae29, type: 3}
+  - Name: Hoe
+    ID: 3
+    Description: A farm item
+    Image: {fileID: 943714571, guid: 0c8a50d9f1205f54c95c4fc0499a64bf, type: 3}
+    CanBeStacked: 0
+    MaxStackSize: 1
+    CanBeThrowAway: 0
+    Consumable: 0
+    EnergyBoost: 0
+    Price: 0
+    ToolType: 2
+    ToolRange: {x: 0, y: 0}
+    ToolAnimator: {fileID: 22100000, guid: 967c81bdb201821439e196ac43efd9f2, type: 2}
+    CropTypeIndex: -1
+    Prefab: {fileID: 0}
+  - Name: Hand
+    ID: 5
+    Description: hai cang
+    Image: {fileID: -120231290, guid: 0c8a50d9f1205f54c95c4fc0499a64bf, type: 3}
+    CanBeStacked: 0
+    MaxStackSize: 1
+    CanBeThrowAway: 0
+    Consumable: 0
+    EnergyBoost: 0
+    Price: 0
+    ToolType: 1
+    ToolRange: {x: 0, y: 0}
+    ToolAnimator: {fileID: 0}
+    CropTypeIndex: -1
+    Prefab: {fileID: 0}

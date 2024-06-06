@@ -8,7 +8,27 @@ using UnityEngine;
 namespace FarmGame.Tools {
     public class HandTool : Tool {
         public HandTool(ToolType toolType) : base(toolType) { }
-        public override void UseTool(Player agent) {
+
+        public override void Equip(IAgent agent) {
+            agent.FieldDetectorObject.StartChecking(ToolRange);
+        }
+
+        public override void Unequip(IAgent agent) {
+            agent.FieldDetectorObject.StopChecking();
+        }
+
+        public override void UseTool(IAgent agent) {
+            IEnumerable<IInteractable> interactables = null;
+            if (agent.FieldDetectorObject.IsNearField) {
+                List<Vector2> detectPosition = agent.FieldDetectorObject.ValidSelectionPositions;
+                if (detectPosition.Count > 0) {
+                    interactables = agent.InteractionDetector.PerformDetection(detectPosition[0]);
+                }
+            }
+
+            if (interactables == null)
+                interactables = agent.InteractionDetector.PerformDetection();
+
             foreach (IInteractable item in agent.InteractionDetector.PerformDetection()) {
                 if (item.CanInteract(agent)) {
                     agent.BlockedInput = true;
@@ -20,16 +40,5 @@ namespace FarmGame.Tools {
                 }
             }
         }
-    }
-
-    public enum ToolType {
-        None,
-        Hand,
-        Hoe,
-        WateringCan,
-        Axe,
-        Pickaxe,
-        Sickle,
-        Hammer
     }
 }

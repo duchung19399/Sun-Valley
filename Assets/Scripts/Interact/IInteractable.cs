@@ -7,7 +7,7 @@ namespace FarmGame.Interact {
 
         List<ToolType> UsableTools { get; set; }
 
-        bool CanInteract(Player agent);
-        void Interact(Player agent);
+        bool CanInteract(IAgent agent);
+        void Interact(IAgent agent);
     }
 }

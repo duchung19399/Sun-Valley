@@ -11,6 +11,12 @@ namespace FarmGame.Agent {
         private const string DIRECTION_Y = "DirectionY";
         private const string IS_MOVING = "IsMoving";
         private const string PICK_UP = "PickUp";
+        private const string SWING = "Swing";
+
+        [SerializeField]
+        private ToolAnimation toolAnimation;
+
+        public ToolAnimation ToolAnimation { get => toolAnimation;}
 
         [HideInInspector] public UnityEvent OnAnimationEnd;
 
@@ -27,7 +33,7 @@ namespace FarmGame.Agent {
         public void ChangeDirection(Vector2 direction) {
             if (direction.magnitude < 0.1f) return;
             Vector2Int dir = Vector2Int.RoundToInt(direction);
-            if(dir.x != 0) dir.y = 0;
+            if (dir.x != 0) dir.y = 0;
             animator.SetFloat(DIRECTION_X, dir.x);
             animator.SetFloat(DIRECTION_Y, dir.y);
         }
@@ -35,6 +41,9 @@ namespace FarmGame.Agent {
         public void PlayAnimation(AnimationType animationType) {
             if (animationType == AnimationType.PickUp) {
                 animator.SetTrigger(PICK_UP);
+            }
+            if (animationType == AnimationType.Swing) {
+                animator.SetTrigger(SWING);
             }
         }
     }
@@ -44,6 +53,7 @@ namespace FarmGame.Agent {
         Idle,
         Walk,
         PickUp,
-        Drop
+        Drop,
+        Swing
     }
 }

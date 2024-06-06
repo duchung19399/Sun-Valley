@@ -27,8 +27,20 @@ namespace FarmGame.Interact {
             }
 
             return new List<IInteractable>();
+        }
 
+        public IEnumerable<IInteractable> PerformDetection(Vector2 position) {
 
+            Collider2D colliderResult = Physics2D.OverlapCircle(
+                position,
+                0.1f,
+                _interactionLayerMask);
+
+            if (colliderResult != null) {
+                return colliderResult.GetComponents<IInteractable>();
+            }
+
+            return new List<IInteractable>();
         }
     }
 }
