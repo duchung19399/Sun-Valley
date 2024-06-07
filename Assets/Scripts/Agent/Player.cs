@@ -1,4 +1,5 @@
 using System;
+using FarmGame.DataStorage;
 using FarmGame.Farming;
 using FarmGame.Interact;
 using FarmGame.Tools;
@@ -16,13 +17,11 @@ namespace FarmGame.Agent {
 
         [SerializeField] private RuntimeAnimatorController _hoeAnimatorController;
 
-        private Tool _selectedTool = new HoeTool(ToolType.Hoe);
-
         public InputReader InputReader { get => _inputReader; }
         public AgentMover AgentMover { get => _agentMover; }
         public AgentAnimation AgentAnimation { get => _agentAnimation; }
         public InteractionDetector InteractionDetector { get => _interactionDetector; }
-        public Tool SelectedTool { get => _selectedTool; }
+
         [SerializeField]
         private FieldDetector _fieldDetector;
         public FieldDetector FieldDetectorObject {
@@ -30,6 +29,12 @@ namespace FarmGame.Agent {
         }
 
         [SerializeField] private FieldController _fieldController;
+
+        [SerializeField] private ItemDatabaseSO _itemDatabase;
+
+        [field: SerializeField] public ToolsBag ToolsBag { get; private set; }
+
+        [SerializeField] private ToolsSelectionUI _toolsSelectionUI;
 
         private bool _blockedInput = false;
         public bool BlockedInput {
@@ -47,6 +52,13 @@ namespace FarmGame.Agent {
         private void OnEnable() {
             _inputReader.MoveEvent += OnMove;
             _inputReader.InteractEvent += Interact;
+            _inputReader.SwapToolEvent += SwapTool;
+
+            ToolsBag.OnToolBagUpdated += _toolsSelectionUI.UpdateUI;
+        }
+
+        private void SwapTool() {
+            ToolsBag.SelectNextTool(this);
         }
 
         private void Awake() {
@@ -54,12 +66,11 @@ namespace FarmGame.Agent {
         }
 
         private void Start() {
-            _selectedTool.Equip(this);
+            ToolsBag.Initialize(this);
         }
 
         private void Interact() {
-            _selectedTool.ToolAnimator = _hoeAnimatorController;
-            _selectedTool.UseTool(this);
+            ToolsBag.CurrentTool.UseTool(this);
         }
 
         private void OnMove(Vector2 moveValue) {
@@ -75,6 +86,8 @@ namespace FarmGame.Agent {
 
         private void OnDisable() {
             _agentMover.OnMoveStateChanged -= _agentAnimation.SetMoving;
+
+            ToolsBag.OnToolBagUpdated -= _toolsSelectionUI.UpdateUI;
         }
     }
 }

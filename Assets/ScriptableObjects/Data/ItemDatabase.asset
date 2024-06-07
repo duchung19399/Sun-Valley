@@ -75,7 +75,7 @@ MonoBehaviour:
     CropTypeIndex: -1
     Prefab: {fileID: 0}
   - Name: Hand
-    ID: 5
+    ID: 4
     Description: hai cang
     Image: {fileID: -120231290, guid: 0c8a50d9f1205f54c95c4fc0499a64bf, type: 3}
     CanBeStacked: 0

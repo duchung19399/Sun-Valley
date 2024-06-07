@@ -1,5 +1,5 @@
 {
-    "name": "PlayerAction",
+    "name": "GameInput",
     "maps": [
         {
             "name": "Player",
@@ -18,6 +18,15 @@
                     "name": "Interact",
                     "type": "Button",
                     "id": "a29fd170-82a7-47c2-92c1-e84ab7a7c740",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SwapTool",
+                    "type": "Button",
+                    "id": "a6953be9-f878-4919-9f83-41153ef7101d",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -143,6 +152,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d46d6806-10e0-4ea6-88ec-c499b7aa9049",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwapTool",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

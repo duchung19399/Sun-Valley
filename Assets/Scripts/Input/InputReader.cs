@@ -14,6 +14,8 @@ public class InputReader : ScriptableObject, GameInput.IPlayerActions {
     public event UnityAction<Vector2> MoveEvent = delegate { };
     public event UnityAction InteractEvent = delegate { };
 
+    public event UnityAction SwapToolEvent = delegate { };
+
     private void OnEnable() {
         if (_gameInput == null) {
             _gameInput = new GameInput();
@@ -54,6 +56,12 @@ public class InputReader : ScriptableObject, GameInput.IPlayerActions {
 
     public void OnMovement(InputAction.CallbackContext context) {
         MoveEvent.Invoke(context.ReadValue<Vector2>());
+    }
+
+    public void OnSwapTool(InputAction.CallbackContext context) {
+        if (context.phase == InputActionPhase.Performed) {
+            SwapToolEvent.Invoke();
+        }
     }
 }
 

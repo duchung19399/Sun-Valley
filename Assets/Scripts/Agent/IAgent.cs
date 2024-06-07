@@ -9,7 +9,7 @@ namespace FarmGame.Agent {
         AgentAnimation AgentAnimation { get; }
         bool BlockedInput { get; set; }
         InteractionDetector InteractionDetector { get; }
-        Tool SelectedTool { get; }
+        ToolsBag ToolsBag { get; }
         FieldDetector FieldDetectorObject { get; }
         FieldController FieldController { get; }
     }
