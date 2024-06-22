@@ -46,3 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   preparedFieldTilemap: {fileID: 0}
   preparedFieldTile: {fileID: 11400000, guid: 2ca3a9d85a024164585f9b8c1cfc6174, type: 2}
+  _cropPrefab: {fileID: 1111617154929077786, guid: acc7023c0193a244a92082b5d167e3b8, type: 3}

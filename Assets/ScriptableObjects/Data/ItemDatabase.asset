@@ -89,3 +89,33 @@ MonoBehaviour:
     ToolAnimator: {fileID: 0}
     CropTypeIndex: -1
     Prefab: {fileID: 0}
+  - Name: Corn
+    ID: 5
+    Description: Can be sold for profit
+    Image: {fileID: 1371048177, guid: 124db5389ac4bbb44bc2b68a1b5e83dc, type: 3}
+    CanBeStacked: 1
+    MaxStackSize: 99
+    CanBeThrowAway: 0
+    Consumable: 1
+    EnergyBoost: 1
+    Price: 10
+    ToolType: 0
+    ToolRange: {x: 0, y: 0}
+    ToolAnimator: {fileID: 0}
+    CropTypeIndex: -1
+    Prefab: {fileID: 0}
+  - Name: Corn Seeds
+    ID: 6
+    Description: Seed to produce corn
+    Image: {fileID: 1391244112, guid: 0c8a50d9f1205f54c95c4fc0499a64bf, type: 3}
+    CanBeStacked: 1
+    MaxStackSize: 9
+    CanBeThrowAway: 0
+    Consumable: 0
+    EnergyBoost: 0
+    Price: 1
+    ToolType: 3
+    ToolRange: {x: 1, y: 1}
+    ToolAnimator: {fileID: 0}
+    CropTypeIndex: 0
+    Prefab: {fileID: 0}

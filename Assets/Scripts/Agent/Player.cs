@@ -1,9 +1,11 @@
 using System;
 using FarmGame.DataStorage;
+using FarmGame.DataStorage.Inventory;
 using FarmGame.Farming;
 using FarmGame.Interact;
 using FarmGame.Tools;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace FarmGame.Agent {
     public class Player : MonoBehaviour, IAgent {
@@ -36,6 +38,9 @@ namespace FarmGame.Agent {
 
         [SerializeField] private ToolsSelectionUI _toolsSelectionUI;
 
+        [SerializeField] private Inventory _inventory;
+        public Inventory Inventory => _inventory;
+
         private bool _blockedInput = false;
         public bool BlockedInput {
             get => _blockedInput;
@@ -49,12 +54,19 @@ namespace FarmGame.Agent {
 
         public FieldController FieldController => _fieldController;
 
+        public UnityEvent<Inventory> OnToggleInventoryUI;
+
         private void OnEnable() {
             _inputReader.MoveEvent += OnMove;
             _inputReader.InteractEvent += Interact;
             _inputReader.SwapToolEvent += SwapTool;
+            _inputReader.ToggleInventoryEvent += ToggleInventoryUI;
 
             ToolsBag.OnToolBagUpdated += _toolsSelectionUI.UpdateUI;
+        }
+
+        private void ToggleInventoryUI() {
+            OnToggleInventoryUI?.Invoke(Inventory);
         }
 
         private void SwapTool() {

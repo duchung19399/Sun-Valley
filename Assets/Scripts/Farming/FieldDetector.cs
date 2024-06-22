@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace FarmGame.Farming {
@@ -100,10 +102,23 @@ namespace FarmGame.Farming {
                 return new List<Vector2>();
             }
 
-            if (dectectRange.magnitude > 2) {
-                throw new NotImplementedException("DetectValidTiles: Detect Range is too big");
+            int halfX = dectectRange.x;
+            int halfY = dectectRange.y;
+            int xMax = halfX * 2 + 1;
+            int yMax = halfY * 2 + 1;
+
+            List<Vector2> tilesToCheck = new();
+            Vector2 positionInFrontCached = PositionInFront;
+            for (int x = 0; x < xMax; x++) {
+                for(int y = 0; y < yMax; y++) {
+                    tilesToCheck.Add(positionInFrontCached + new Vector2(x - halfX, y - halfY));
+                }
             }
-            return _fieldPositionValidator.GetValidFieldTiles(new List<Vector2> { PositionInFront });
+
+            return _fieldPositionValidator.GetValidFieldTiles(tilesToCheck);
+
+
+            //return _fieldPositionValidator.GetValidFieldTiles(new List<Vector2> { PositionInFront });
         }
     }
 }

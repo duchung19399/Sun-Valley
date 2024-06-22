@@ -12,4 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13e274f0ab1e06a42b2f1cf1eb1185f1, type: 3}
   m_Name: CropDatabase
   m_EditorClassIdentifier: 
-  _cropData: []
+  _cropData:
+  - Name: Corn
+    ID: 0
+    ProducedItemId: 5
+    Sprites:
+    - {fileID: -1292160221, guid: d99c0fb10577989408ef7add914423fc, type: 3}
+    - {fileID: -1253615864, guid: b18452bf7c8a2fa45a685461947ba5ec, type: 3}
+    - {fileID: -1607246095, guid: b18452bf7c8a2fa45a685461947ba5ec, type: 3}
+    - {fileID: -609591658, guid: b18452bf7c8a2fa45a685461947ba5ec, type: 3}
+    - {fileID: 563494735, guid: b18452bf7c8a2fa45a685461947ba5ec, type: 3}
+    - {fileID: 1693228553, guid: b18452bf7c8a2fa45a685461947ba5ec, type: 3}
+    GrowthDelayPerStage: 1
+    WiltThreshold: 2
+    _growthSeason: 0
+    <GrowthSeasonIndex>k__BackingField: 0
+    ProducedCount: 1
+    _collectTools: 01000000

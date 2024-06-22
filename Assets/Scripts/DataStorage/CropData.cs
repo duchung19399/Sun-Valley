@@ -20,6 +20,9 @@ namespace FarmGame.DataStorage {
         private Season _growthSeason;
         [field: SerializeField]
         public int GrowthSeasonIndex { get; private set; }
+
+        public int ProducedCount;
+
         [SerializeField]
         private List<ToolType> _collectTools;
         public List<ToolType> GetCollectTools => new List<ToolType>(_collectTools);

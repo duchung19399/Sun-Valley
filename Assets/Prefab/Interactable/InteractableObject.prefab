@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2974357375398261989}
   - component: {fileID: 7361339069459552128}
   - component: {fileID: -8651136042841196456}
+  - component: {fileID: 4904387193514293529}
   m_Layer: 8
   m_Name: InteractableObject
   m_TagString: Untagged
@@ -81,6 +82,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86eb036b0a9ddd04a98f008fd0d464c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _destroyOnPickUp: 1
+  <ItemDatabase>k__BackingField: {fileID: 11400000, guid: 3ed6562608efc8842aa2071b9af65db0, type: 2}
   <UsableTools>k__BackingField: 
   OnPickUp:
     m_PersistentCalls:
@@ -113,3 +116,18 @@ MonoBehaviour:
   _playOnStart: 0
   _audioCueEventChannel: {fileID: 11400000, guid: 8daffd52f76029e48a386c96b5138219, type: 2}
   _audioConfiguration: {fileID: 11400000, guid: 827f8ba0db8ac9b40848e783e852597c, type: 2}
+--- !u!114 &4904387193514293529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8312646824312836952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 375b82af9c089344787b66be6f11e02e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemDatabaseIndex: 0
+  itemCount: 0
+  itemQuality: 0

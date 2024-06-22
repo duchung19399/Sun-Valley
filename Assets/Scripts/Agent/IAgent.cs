@@ -1,3 +1,4 @@
+using FarmGame.DataStorage.Inventory;
 using FarmGame.Farming;
 using FarmGame.Interact;
 using FarmGame.Tools;
@@ -12,5 +13,6 @@ namespace FarmGame.Agent {
         ToolsBag ToolsBag { get; }
         FieldDetector FieldDetectorObject { get; }
         FieldController FieldController { get; }
+        Inventory Inventory { get; }
     }
 }

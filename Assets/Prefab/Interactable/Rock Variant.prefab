@@ -71,7 +71,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -921587373
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 1001558109, guid: d99c0fb10577989408ef7add914423fc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -199,12 +199,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4904387193514293529, guid: 7e211323cd3d74140b73abea69de4dce, type: 3}
+      propertyPath: itemCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904387193514293529, guid: 7e211323cd3d74140b73abea69de4dce, type: 3}
+      propertyPath: itemQuality
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 7361339069459552128, guid: 7e211323cd3d74140b73abea69de4dce, type: 3}
       propertyPath: <UsableTools>k__BackingField.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7361339069459552128, guid: 7e211323cd3d74140b73abea69de4dce, type: 3}
       propertyPath: <UsableTools>k__BackingField.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7361339069459552128, guid: 7e211323cd3d74140b73abea69de4dce, type: 3}
+      propertyPath: <UsableTools>k__BackingField.Array.data[1]
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8312646824312836952, guid: 7e211323cd3d74140b73abea69de4dce, type: 3}

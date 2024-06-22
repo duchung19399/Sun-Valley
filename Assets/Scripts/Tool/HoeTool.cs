@@ -3,10 +3,16 @@ using FarmGame.Agent;
 
 namespace FarmGame.Tools {
     public class HoeTool : Tool {
-        public HoeTool(ToolType toolType) : base(toolType) { }
+        public HoeTool(int itemID, string data) : base(itemID, data) {
+            this.ToolType = ToolType.Hoe;
+        }
 
         public override void Equip(IAgent agent) {
             agent.FieldDetectorObject.StartChecking(ToolRange);
+        }
+
+        public override bool IsToolStillValid() {
+            return true;
         }
 
         public override void Unequip(IAgent agent) {
