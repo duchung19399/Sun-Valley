@@ -17094,6 +17094,50 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7126303236900673267, guid: 93af4a7bc1d5dd6448c67aea197e16f5, type: 3}
   m_PrefabInstance: {fileID: 1126076051}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1137961272
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1137961274}
+  - component: {fileID: 1137961273}
+  m_Layer: 0
+  m_Name: TimeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1137961273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1137961272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70524fda3e778a449b650bfe61708c7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1137961274
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1137961272}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1332425973
 GameObject:
   m_ObjectHideFlags: 0
@@ -22829,11 +22873,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7809847412448251820, guid: 7a6059e35f509f0468f0bb21ea8d8925, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.0773183
+      value: -1.3947762
       objectReference: {fileID: 0}
     - target: {fileID: 7809847412448251820, guid: 7a6059e35f509f0468f0bb21ea8d8925, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -11.062329
+      value: -11.06246
       objectReference: {fileID: 0}
     - target: {fileID: 7809847412448251820, guid: 7a6059e35f509f0468f0bb21ea8d8925, type: 3}
       propertyPath: m_LocalPosition.z
@@ -22996,6 +23040,7 @@ SceneRoots:
   - {fileID: 1603223784}
   - {fileID: 1977135514910048088}
   - {fileID: 668508103}
+  - {fileID: 1137961274}
   - {fileID: 619015891}
   - {fileID: 619394802}
   - {fileID: 1099603920}

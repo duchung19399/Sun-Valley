@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using FarmGame.DataStorage;
 using FarmGame.DataStorage.Inventory;
+using FarmGame.TimeSystem;
 using UnityEngine;
 
 namespace FarmGame.UI {
@@ -20,7 +21,8 @@ namespace FarmGame.UI {
         private ItemSelectionUI _itemSelectionUI;
         [SerializeField]
         private ItemDescriptionUI _itemDescriptionUI;
-
+        [SerializeField]
+        private PauseTimeControllerSO _pauseTimeControllerSO;
 
 
         private void Awake() {
@@ -44,6 +46,7 @@ namespace FarmGame.UI {
             _itemSelectionUI.EnableController(_inputReader);
 
             UpdateInventoryItems(inventory.InventoryContent);
+            _pauseTimeControllerSO.SetTimePause(true);
         }
 
         private void UpdateInventoryItems(IEnumerable<InventoryItemData> inventoryContent) {
@@ -76,6 +79,8 @@ namespace FarmGame.UI {
 
             _inventoryTempReference.OnUpdateInventory -= UpdateInventoryItems;
             _itemSelectionUI.DisableController(_inputReader);
+
+            _pauseTimeControllerSO.SetTimePause(false);
         }
     }
 }
