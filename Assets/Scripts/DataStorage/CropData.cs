@@ -11,7 +11,7 @@ namespace FarmGame.DataStorage {
         public int ID;
         public int ProducedItemId;
         public List<Sprite> Sprites;
-        [Min(1)]
+        [Min(0)]
         public int GrowthDelayPerStage;
         [Min(1)]
         public int WiltThreshold;
@@ -39,10 +39,11 @@ namespace FarmGame.DataStorage {
 
 
 namespace FarmGame {
+    [Flags]
     public enum Season {
-        Spring,
-        Summer,
-        Autumn,
-        Winter
+        Spring = 1,
+        Summer = 2,
+        Autumn = 4,
+        Winter = 8
     }
 }

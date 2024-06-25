@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8338795054578893746}
   - component: {fileID: 4608012602353757462}
   - component: {fileID: 1341755507299329652}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CropPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}

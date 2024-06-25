@@ -2,8 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using FarmGame.DataStorage;
+using FarmGame.Interact;
+using FarmGame.TimeSystem;
 using Unity.VisualScripting;
 using UnityEngine;
+using static FarmGame.TimeSystem.TimeManager;
 
 namespace FarmGame.Farming {
     public class FieldController : MonoBehaviour {
@@ -12,12 +15,18 @@ namespace FarmGame.Farming {
         private FieldData _fieldData;
         [SerializeField]
         private CropDatabaseSO _cropDatabase;
+        [SerializeField]
+        private ItemDatabaseSO _itemDatabase;
 
 
         [SerializeField]
         private AudioSource audioSource;
         [SerializeField]
         private AudioClip _prepareFieldSound, _placeCropSound;
+
+        private TimeManager _timeManager;
+
+        private TimeEventArgs _previousTimeArgs;
 
         private void Awake() {
             _fieldRenderer = FindObjectOfType<FieldRenderer>(true);
@@ -27,6 +36,118 @@ namespace FarmGame.Farming {
                     Debug.LogError("FieldData not found", gameObject);
                 }
             }
+
+            if (_timeManager = FindObjectOfType<TimeManager>(true)) {
+                _timeManager.OnDayProgress += AffectCrops;
+            } else {
+                Debug.LogError("TimeManager not found", gameObject);
+            }
+        }
+
+        private void AffectCrops(object sender, TimeEventArgs timeArgs) {
+            if (_previousTimeArgs != null && _previousTimeArgs.CurrentDay == timeArgs.CurrentDay) {
+                return;
+            }
+            _previousTimeArgs = timeArgs;
+            foreach (var keyValue in _fieldData.crops) {
+                Crop crop = keyValue.Value;
+                CropData data = _cropDatabase.GetCropData(crop.ID);
+                if (data == null) {
+                    Debug.LogError($"No data found for id {crop.ID}");
+                    continue;
+                }
+                if (crop.Dead) continue;
+                if (((timeArgs.CurrentSeason + 1) & data.GrowthSeasonIndex) != (timeArgs.CurrentSeason + 1)) {
+                    if (timeArgs.SeasonChanged) {
+                        crop.Dead = true;
+                    } else {
+                        continue;
+                    }
+                }
+                ModifyCropStatus(crop, data, keyValue.Key);
+                if (crop.Regress >= data.WiltThreshold || crop.Dead) {
+                    crop.Dead = true;
+                    WiltCrop(keyValue.Key);
+                }
+            }
+            PrintCropStatus();
+        }
+
+        private void WiltCrop(Vector3Int key) {
+            if (_fieldRenderer == null) return;
+            Vector3Int cropPosition = _fieldRenderer.GetTilemapTilePosition(key);
+            _fieldRenderer.WiltCropVisualization(cropPosition);
+        }
+
+        private void ModifyCropStatus(Crop crop, CropData data, Vector3Int position) {
+            if (crop.Ready) {
+                crop.Regress++;
+
+            } else {
+                crop.Watered = true;
+                if (crop.Watered) {
+                    crop.Watered = false;
+                    if (crop.Regress > 0) {
+
+                        crop.Regress--;
+                    } else {
+                        crop.Progress++;
+                        if (crop.Progress > data.GrowthDelayPerStage) {
+                            crop.GrowthLevel++;
+                            crop.Progress = 0;
+                            UpdateCropAt(position, crop.ID, crop.GrowthLevel);
+                            if (crop.GrowthLevel == data.Sprites.Count - 1) {
+                                crop.Ready = true;
+                                ClearFieldAt(position);
+                                if (_fieldRenderer != null) {
+                                    PickUpInteraction pickUpInteraction = _fieldRenderer.MakeCropCollectable(position, data, crop.GetQuality(), _itemDatabase);
+                                    pickUpInteraction.OnPickUp.AddListener(() => {
+                                        RemoveCropAt(position);
+                                    });
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    if (crop.GrowthLevel > 0) {
+                        crop.Regress++;
+                    }
+                }
+            }
+        }
+
+        private void UpdateCropAt(Vector3Int position, int iD, int growthLevel) {
+            if (_fieldRenderer == null) return;
+            Vector3Int tilePosition = _fieldRenderer.GetTilemapTilePosition(position);
+            CropData data = _cropDatabase.GetCropData(iD);
+            if (data == null) {
+                Debug.LogError($"No data found for id {iD}", gameObject);
+                return;
+            } else {
+                _fieldRenderer.UpdateCropVisualization(tilePosition, data.Sprites[growthLevel], growthLevel > 0);
+                if(growthLevel < 1) audioSource.PlayOneShot(_placeCropSound);
+            }
+        }
+
+        private void RemoveCropAt(Vector3Int position) {
+            _fieldData.crops.Remove(position);
+            if (_fieldRenderer != null) {
+                _fieldRenderer.RemoveCropAt(position);
+            }
+        }
+
+        private void ClearFieldAt(Vector3Int position) {
+            _fieldData.preparedFields.Remove(position);
+            RecreatePreparedFieldPosition();
+        }
+
+        private void RecreatePreparedFieldPosition() {
+            if (_fieldRenderer == null) return;
+            _fieldRenderer.ClearPreparedField();
+            foreach (var fieldPosition in _fieldData.preparedFields) {
+                bool watered = _fieldData.crops.ContainsKey(fieldPosition) ? _fieldData.crops[fieldPosition].Watered : false;
+                _fieldRenderer.PrepareFieldAt(fieldPosition, watered);
+            }
         }
 
         public void PrepareField(Vector3 worldPosition) {
@@ -35,7 +156,7 @@ namespace FarmGame.Farming {
 
             if (_fieldData.preparedFields.Contains(tilePosition)) return;
 
-            _fieldRenderer.PrepareFieldAtPosition(tilePosition);
+            _fieldRenderer.PrepareFieldAt(tilePosition);
             audioSource.PlayOneShot(_prepareFieldSound);
             _fieldData.preparedFields.Add(tilePosition);
         }
@@ -53,13 +174,13 @@ namespace FarmGame.Farming {
                 _fieldData.crops[tilePosition] = new Crop(cropID);
             }
             CropData data = _cropDatabase.GetCropData(cropID);
-            if(data == null) {
+            if (data == null) {
                 Debug.LogError($"No data found for id {cropID}");
                 return;
             }
             Debug.Log("Creating visual crop");
             _fieldRenderer.CreateCropVisualization(tilePosition, data.Sprites[growthLevel], growthLevel > 0);
-            if(playSound) {
+            if (playSound) {
                 audioSource.PlayOneShot(_placeCropSound);
             }
 

@@ -7276,6 +7276,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fieldData: {fileID: 5758989102328446770}
   _cropDatabase: {fileID: 11400000, guid: 8dc1ce6d91f97e44d9ec8903ba225ac1, type: 2}
+  _itemDatabase: {fileID: 11400000, guid: 3ed6562608efc8842aa2071b9af65db0, type: 2}
   audioSource: {fileID: 2162065978422342827}
   _prepareFieldSound: {fileID: 8300000, guid: 2b2322439273bf94ea4c35fb1f6bbb36, type: 3}
   _placeCropSound: {fileID: 8300000, guid: ff1c8427efbc8574f8a3f9f87221e108, type: 3}
@@ -7334,7 +7335,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6418138189242597077, guid: 7496b9ec0d63a8d418802116f85dea30, type: 3}
       propertyPath: contactFilter.layerMask.m_Bits
-      value: 328
+      value: 72
       objectReference: {fileID: 0}
     - target: {fileID: 6734344312882241891, guid: 7496b9ec0d63a8d418802116f85dea30, type: 3}
       propertyPath: m_LocalPosition.x

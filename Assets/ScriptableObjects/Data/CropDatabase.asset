@@ -23,9 +23,9 @@ MonoBehaviour:
     - {fileID: -609591658, guid: b18452bf7c8a2fa45a685461947ba5ec, type: 3}
     - {fileID: 563494735, guid: b18452bf7c8a2fa45a685461947ba5ec, type: 3}
     - {fileID: 1693228553, guid: b18452bf7c8a2fa45a685461947ba5ec, type: 3}
-    GrowthDelayPerStage: 1
+    GrowthDelayPerStage: 0
     WiltThreshold: 2
-    _growthSeason: 0
-    <GrowthSeasonIndex>k__BackingField: 0
+    _growthSeason: 3
+    <GrowthSeasonIndex>k__BackingField: 3
     ProducedCount: 1
     _collectTools: 01000000

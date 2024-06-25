@@ -39,8 +39,8 @@ namespace FarmGame.Tools {
                 if (item.CanInteract(agent)) {
                     agent.BlockedInput = true;
                     agent.AgentAnimation.OnAnimationEnd.AddListener(() => {
-                        item.Interact(agent);
                         agent.BlockedInput = false;
+                        item.Interact(agent);
                     });
                     agent.AgentAnimation.PlayAnimation(AnimationType.PickUp);
                 }
