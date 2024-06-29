@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: WateringCanRenderer
+  m_Controller: {fileID: 9100000, guid: c32ebb62b2ae8e743b92ccf11f93f256, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 8c4c0a8865d89774e86f7214d4df63e5, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: d5d4a28c4658e2448bf649846bef3dfe, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 3b9c52fefe58c28458b166c4ce32559e, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 7168a799220542a448b535e3f9b4cf88, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 3c326624d7a762543a5baa98d9248680, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 5eeca9740747fcd4e8c847dbdf93a8b1, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 2152d154faead4d4a8e3d2ba80fa3e71, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 0e8381422bc538f4393b725b66203ca3, type: 2}
