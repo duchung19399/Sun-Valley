@@ -37,6 +37,7 @@ public class AudioManager : MonoBehaviour
 		//TODO: Get the initial volume levels from the settings
 		_soundEmitterVault = new SoundEmitterVault();
 
+		_pool.OnDisable();//disable để clear obj trong pool do ko có DontDestroyOnLoad làm rootparent nên 1 số object bị xoá khi chuyển scene
 		_pool.Prewarm(_initialSize);
 		_pool.SetParent(this.transform);
 	}

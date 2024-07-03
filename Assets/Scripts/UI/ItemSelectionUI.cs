@@ -55,7 +55,7 @@ namespace FarmGame.UI {
             }
         }
 
-        private void SelectItemAt(int newIndex) {
+        public void SelectItemAt(int newIndex) {
             _inventoryRendererUI.ResetAllSelection(false);
             _selectedItemIndex = newIndex;
             _inventoryRendererUI.SelectItem(_selectedItemIndex);

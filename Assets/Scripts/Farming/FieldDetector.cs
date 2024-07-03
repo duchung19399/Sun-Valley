@@ -28,7 +28,7 @@ namespace FarmGame.Farming {
         private void Awake() {
             _fieldPositionValidator = FindObjectOfType<FieldPositionValidator>();
             if (_fieldPositionValidator == null) {
-                Debug.LogError("FieldDetector: No FieldPositionValidator found in scene");
+                Debug.LogWarning("FieldDetector: No FieldPositionValidator found in scene");
             }
         }
 

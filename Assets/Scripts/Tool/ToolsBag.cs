@@ -25,7 +25,7 @@ namespace FarmGame.Tools {
         [SerializeField]
         private int _handToolID = 4;
 
-        private void Start() {
+        private void Awake() {
             for (int i = 0; i < _initialTools.Count; i++) {
                 ItemData itemData = _itemDatabase.GetItemData(_initialTools[i]);
                 string data = null;

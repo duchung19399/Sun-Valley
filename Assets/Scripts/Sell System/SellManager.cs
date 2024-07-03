@@ -31,7 +31,7 @@ namespace FarmGame.SellSystem {
         }
 
         private void Start() {
-            _sellBoxInventory.AddItem(new InventoryItemData(5, 1, -1), 99);
+        
         }
 
         private void ResetSellSystem(object sender, TimeManager.TimeEventArgs e) {

@@ -77,6 +77,7 @@ namespace FarmGame.Agent {
         }
 
         private void Awake() {
+            BlockedInput = false;
             _agentMover.OnMoveStateChanged += _agentAnimation.SetMoving;
         }
 
@@ -102,6 +103,12 @@ namespace FarmGame.Agent {
         }
 
         private void OnDisable() {
+
+            _inputReader.MoveEvent -= OnMove;
+            _inputReader.InteractEvent -= Interact;
+            _inputReader.SwapToolEvent -= SwapTool;
+            _inputReader.ToggleInventoryEvent -= ToggleInventoryUI;
+
             _agentMover.OnMoveStateChanged -= _agentAnimation.SetMoving;
 
             ToolsBag.OnToolBagUpdated -= _toolsSelectionUI.UpdateUI;
