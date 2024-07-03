@@ -10,6 +10,7 @@ using UnityEngine.Events;
 namespace FarmGame.Interact {
     public class SleepInteraction : MonoBehaviour, IInteractable {
         public List<ToolType> UsableTools { get; set; } = new() { ToolType.Hand };
+        public bool UseResource { get ; set; }
 
         public UnityEvent OnAfterFinishedSleeping, OnMoveToNextDay;
 

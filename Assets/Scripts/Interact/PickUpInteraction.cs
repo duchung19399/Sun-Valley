@@ -19,6 +19,7 @@ namespace FarmGame.Interact {
 
         [field: SerializeField]
         public List<ToolType> UsableTools { get; set; } = new List<ToolType>();
+        public bool UseResource { get; set; }
 
         public UnityEngine.Events.UnityEvent OnPickUp;
 

@@ -20,9 +20,9 @@ namespace FarmGame.Farming {
 
 
         [SerializeField]
-        private AudioSource audioSource;
+        private AudioSource _audioSource;
         [SerializeField]
-        private AudioClip _prepareFieldSound, _placeCropSound;
+        private AudioClip _prepareFieldSound, _placeCropSound, _wateringFieldSound;
 
         private TimeManager _timeManager;
 
@@ -84,7 +84,6 @@ namespace FarmGame.Farming {
                 crop.Regress++;
 
             } else {
-                crop.Watered = true;
                 if (crop.Watered) {
                     crop.Watered = false;
                     if (crop.Regress > 0) {
@@ -125,7 +124,7 @@ namespace FarmGame.Farming {
                 return;
             } else {
                 _fieldRenderer.UpdateCropVisualization(tilePosition, data.Sprites[growthLevel], growthLevel > 0);
-                if(growthLevel < 1) audioSource.PlayOneShot(_placeCropSound);
+                if (growthLevel < 1) _audioSource.PlayOneShot(_placeCropSound);
             }
         }
 
@@ -157,7 +156,7 @@ namespace FarmGame.Farming {
             if (_fieldData.preparedFields.Contains(tilePosition)) return;
 
             _fieldRenderer.PrepareFieldAt(tilePosition);
-            audioSource.PlayOneShot(_prepareFieldSound);
+            _audioSource.PlayOneShot(_prepareFieldSound);
             _fieldData.preparedFields.Add(tilePosition);
         }
 
@@ -181,7 +180,7 @@ namespace FarmGame.Farming {
             Debug.Log("Creating visual crop");
             _fieldRenderer.CreateCropVisualization(tilePosition, data.Sprites[growthLevel], growthLevel > 0);
             if (playSound) {
-                audioSource.PlayOneShot(_placeCropSound);
+                _audioSource.PlayOneShot(_placeCropSound);
             }
 
             PrintCropStatus();
@@ -189,6 +188,25 @@ namespace FarmGame.Farming {
 
         public void PrintCropStatus() {
             _fieldData.PrintCropStatus();
+        }
+
+        public bool IsThereCropAt(Vector2 pos) => _fieldData.crops.ContainsKey(_fieldRenderer.GetTilemapTilePosition(pos));
+
+        public void WaterCropAt(Vector2 pos) {
+            Vector3Int tilePosition = _fieldRenderer.GetTilemapTilePosition(pos);
+            bool result = WaterCropUpdateData(tilePosition);
+            if(result == false) return;
+
+            _fieldRenderer.WaterCropAt(tilePosition);
+            _audioSource.PlayOneShot(_wateringFieldSound);
+        }
+
+        private bool WaterCropUpdateData(Vector3Int tilePosition) {
+            if(_fieldData.crops.ContainsKey(tilePosition) == false) {
+                return false;
+            }
+            _fieldData.crops[tilePosition].Watered = true;
+            return true;
         }
     }
 }

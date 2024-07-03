@@ -14,5 +14,6 @@ namespace FarmGame.Agent {
         FieldDetector FieldDetectorObject { get; }
         FieldController FieldController { get; }
         Inventory Inventory { get; }
+        AgentDataSO AgentData { get; }
     }
 }

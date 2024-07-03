@@ -52,7 +52,8 @@ namespace FarmGame.Agent {
                 _inputReader.SetBlockPlayerInput(value);
             }
         }
-
+        [field: SerializeField]
+        public AgentDataSO AgentData { get; private set; }
 
         public FieldController FieldController => _fieldController;
 
@@ -81,6 +82,8 @@ namespace FarmGame.Agent {
 
         private void Start() {
             ToolsBag.Initialize(this);
+            Debug.Log("<color=red> Resetting Agent Data </color>");
+            AgentData.Money = 0;
         }
 
         private void Interact() {

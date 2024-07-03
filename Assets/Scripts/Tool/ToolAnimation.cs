@@ -9,6 +9,8 @@ namespace FarmGame {
         private const string DIRECTION_X = "DirectionX";
         private const string DIRECTION_Y = "DirectionY";
         private const string USE = "Use";
+        [SerializeField, Min(0.01f)]
+        private float _defaltAnimeSpeed = 1.0f;
 
         private void Awake() {
             animator = GetComponent<Animator>();
@@ -26,7 +28,8 @@ namespace FarmGame {
             animator.SetFloat(DIRECTION_Y, dir.y);
         }
 
-        public void PlayAnimation() {
+        public void PlayAnimation(float animationSpeed = -1) {
+            animator.speed = animationSpeed <= 0 ? _defaltAnimeSpeed : animationSpeed;
             animator.SetTrigger(USE);
         }
     }

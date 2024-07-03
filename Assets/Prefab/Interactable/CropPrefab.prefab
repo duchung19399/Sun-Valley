@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8338795054578893746}
   - component: {fileID: 4608012602353757462}
   - component: {fileID: 1341755507299329652}
+  - component: {fileID: 6965319672728408265}
   m_Layer: 8
   m_Name: CropPrefab
   m_TagString: Untagged
@@ -82,6 +83,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.3
+--- !u!114 &6965319672728408265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1111617154929077786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4901cf9c1dd61a54f9e30c6dde7883de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <UsableTools>k__BackingField: 04000000
 --- !u!1 &5495186955792383720
 GameObject:
   m_ObjectHideFlags: 0

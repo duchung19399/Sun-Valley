@@ -119,3 +119,18 @@ MonoBehaviour:
     ToolAnimator: {fileID: 0}
     CropTypeIndex: 0
     Prefab: {fileID: 0}
+  - Name: Watering Can
+    ID: 7
+    Description: Tool to water crop
+    Image: {fileID: 1771208830, guid: 0c8a50d9f1205f54c95c4fc0499a64bf, type: 3}
+    CanBeStacked: 0
+    MaxStackSize: 1
+    CanBeThrowAway: 0
+    Consumable: 0
+    EnergyBoost: 0
+    Price: 1
+    ToolType: 4
+    ToolRange: {x: 0, y: 0}
+    ToolAnimator: {fileID: 22100000, guid: 138f1ccc05a05fe4db36da83ad1b5d25, type: 2}
+    CropTypeIndex: -1
+    Prefab: {fileID: 0}

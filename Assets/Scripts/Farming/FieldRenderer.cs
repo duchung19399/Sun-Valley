@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using FarmGame.DataStorage;
 using FarmGame.Interact;
 using UnityEngine;
@@ -18,6 +19,10 @@ namespace FarmGame.Farming {
         Dictionary<Vector3Int, GameObject> _cropVisualRepresentation = new();
         [SerializeField]
         private GameObject _cropPrefab;
+
+        [SerializeField]
+        private List<ParticleSystem> _wateringEffects;
+
 
         private void Awake() {
             Debug.Assert(_preparedFieldTilemap != null, "FieldRenderer: preparedFieldTilemap is not set.");
@@ -79,6 +84,28 @@ namespace FarmGame.Farming {
                 Destroy(_cropVisualRepresentation[position]);
             }
             _cropVisualRepresentation.Remove(position);
+        }
+
+        public void WaterCropAt(Vector3Int tilePosition) {
+            PlayWaterSplashEffect(tilePosition);
+            _preparedFieldTilemap.SetTile(tilePosition, _wateredFieldTile);
+        }
+
+        private void PlayWaterSplashEffect(Vector3Int tilePosition) {
+            if (_wateringEffects.Count > 0 && _wateringEffects.All(effect => effect.gameObject.activeSelf)) {
+                ParticleSystem effect = Instantiate(_wateringEffects[0], transform);
+                _wateringEffects.Add(effect);
+                effect.gameObject.SetActive(false);
+            }
+
+            foreach (ParticleSystem waterEffect in _wateringEffects) {
+                if (waterEffect.gameObject.activeSelf == false) {
+                    waterEffect.transform.position = tilePosition + new Vector3(0.5f, 0.5f, 0);
+                    waterEffect.gameObject.SetActive(true);
+                    waterEffect.Play();
+                    return;
+                }
+            }
         }
     }
 

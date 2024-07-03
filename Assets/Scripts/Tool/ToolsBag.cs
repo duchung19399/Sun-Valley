@@ -103,6 +103,8 @@ namespace FarmGame.Tools {
             ItemData selectedToolData = _itemDatabase.GetItemData(_newBag[_selectedToolIndex].ItemIndex);
             if (selectedToolData.ToolType == ToolType.SeedPlacer) {
                 count = _toolsBagInventory.GetItemDataAt(_selectedToolIndex - 1).count;
+            } else if(selectedToolData.ToolType == ToolType.WateringCan) {
+                count = ((WateringCanTool)CurrentTool).NumberOfUses;
             }
 
             List<Sprite> toolSprites = new List<Sprite>();
@@ -160,6 +162,13 @@ namespace FarmGame.Tools {
             _newBag[_selectedToolIndex].OnStartedAction = null;
 
 
+        }
+
+        public void RestoreCurrentTool(IAgent agent) {
+            if(CurrentTool.ToolType == ToolType.WateringCan) {
+                ((WateringCanTool)CurrentTool).Refill();
+            }
+            UpdateInventoryData(agent);
         }
     }
 }

@@ -12,6 +12,7 @@ namespace FarmGame.Agent {
         private const string IS_MOVING = "IsMoving";
         private const string PICK_UP = "PickUp";
         private const string SWING = "Swing";
+        private const string WATERING = "Watering";
 
         [SerializeField]
         private ToolAnimation toolAnimation;
@@ -19,6 +20,7 @@ namespace FarmGame.Agent {
         public ToolAnimation ToolAnimation { get => toolAnimation;}
 
         [HideInInspector] public UnityEvent OnAnimationEnd;
+        [HideInInspector] public UnityEvent OnAnimationOnce;
 
         private void Awake() {
             animator = GetComponent<Animator>();
@@ -27,6 +29,11 @@ namespace FarmGame.Agent {
         public void PlayerActionAnimationEnd() {
             OnAnimationEnd?.Invoke();
             OnAnimationEnd.RemoveAllListeners();
+        }
+
+        public void PlayerActionAnimationOnce() {
+            OnAnimationOnce?.Invoke();
+            OnAnimationOnce.RemoveAllListeners();
         }
 
         public void SetMoving(bool val) => animator.SetBool(IS_MOVING, val);
@@ -45,6 +52,9 @@ namespace FarmGame.Agent {
             if (animationType == AnimationType.Swing) {
                 animator.SetTrigger(SWING);
             }
+            if (animationType == AnimationType.Watering) {
+                animator.SetTrigger(WATERING);
+            }
         }
     }
 
@@ -54,6 +64,7 @@ namespace FarmGame.Agent {
         Walk,
         PickUp,
         Drop,
-        Swing
+        Swing,
+        Watering
     }
 }

@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Sun-Valley.sln"
+    "dotnet.defaultSolution": "Sun Valley.sln"
 }

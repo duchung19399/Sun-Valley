@@ -7,9 +7,9 @@ namespace FarmGame.TimeSystem {
     public class PauseTimeControllerSO : ScriptableObject {
         public void SetTimePause(bool timeFreeze) {
             if (timeFreeze) {
-                Debug.Log($"<b><size = 15> Time </size></b> paused <color = red> {timeFreeze} </color>");
+                Debug.Log($"<b><size=15> Time </size></b> paused <color=red> {timeFreeze} </color>");
             } else {
-                Debug.Log($"<b><size = 15> Time </size></b> paused <color = green> {timeFreeze} </color>");
+                Debug.Log($"<b><size=15> Time </size></b> paused <color=green> {timeFreeze} </color>");
 
             }
             Time.timeScale = timeFreeze ? 0 : 1;

@@ -10,6 +10,7 @@ namespace FarmGame.Tools {
                 ToolType.Hand => new HandTool(data.ID, dataStr),
                 ToolType.Hoe => new HoeTool(data.ID, dataStr),
                 ToolType.SeedPlacer => new SeedPlacementTool(data.ID, dataStr),
+                ToolType.WateringCan => new WateringCanTool(data.ID, dataStr),
                 _ => throw new System.NotImplementedException($"Tool {data.ToolType} not implemented")
             };
             tool.ToolAnimator = data.ToolAnimator;
