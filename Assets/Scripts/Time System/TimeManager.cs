@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using FarmGame.SaveSystem;
 using UnityEngine;
 
 namespace FarmGame.TimeSystem {
-    public class TimeManager : MonoBehaviour {
+    public class TimeManager : MonoBehaviour, ISavable {
         public event EventHandler<TimeEventArgs> OnClockProgress, OnDayProgress;
 
         [SerializeField] private TimeSpan _currentTime;
@@ -15,6 +16,8 @@ namespace FarmGame.TimeSystem {
 
         //1 second = 10 in-game minutes
         private static int REAL_TO_GAME_TIME_RATIO = 1;
+
+        public int SaveID => SaveIDRepository.TIME_MANAGER_ID;
 
         private void Start() {
             if (_calendar == null) {
@@ -71,6 +74,35 @@ namespace FarmGame.TimeSystem {
             }
         }
 
+        public string GetData() {
+            return $"{_calendar.GetSaveData()},{_currentTime.Hours},{_currentTime.Minutes},{Mathf.RoundToInt(_passedTime)}";
+        }
+
+        public void RestoreData(string data) {
+            if (string.IsNullOrEmpty(data)) {
+                _currentTime = new TimeSpan(_currentTime.Days, 6, 0, 0); //start new day at 6:00
+                _calendar = new();
+                _calendar.OnSeasonChange += (seasonIndex) => SendDayUpdateEvent(true);
+                return;
+            }
+
+            string[] loadedData = data.Split(',');
+            if (loadedData.Length > 0) {
+                _calendar = new GameCalendar(int.Parse(loadedData[0]), int.Parse(loadedData[1]), int.Parse(loadedData[2]));
+                _currentTime = new TimeSpan(_currentTime.Days, int.Parse(loadedData[3]), int.Parse(loadedData[4]), 0);
+                _passedTime = int.Parse(loadedData[5]);
+                _calendar.OnSeasonChange += (seasonIndex) => SendDayUpdateEvent(true);
+
+                SendTimeUpdateEvent();
+            } else {
+
+                _currentTime = new TimeSpan(_currentTime.Days, 6, 0, 0); //start new day at 6:00
+                _calendar = new();
+                _calendar.OnSeasonChange += (seasonIndex) => SendDayUpdateEvent(true);
+                return;
+            }
+        }
+
         public class TimeEventArgs : EventArgs {
 
             public bool SeasonChanged { get; private set; }
@@ -79,6 +111,14 @@ namespace FarmGame.TimeSystem {
             public int CurrentSeason { get; private set; }
             public TimeSpan CurrentTime { get; private set; }
             public bool TheSameDay { get; private set; }
+            public TimeEventArgs(bool seasonChanged, int currentDay, int weekDay, int currentSeason, TimeSpan currentTime, bool theSameDay) {
+                SeasonChanged = seasonChanged;
+                CurrentDay = currentDay;
+                WeekDay = weekDay;
+                CurrentSeason = currentSeason;
+                CurrentTime = currentTime;
+                TheSameDay = theSameDay;
+            }
 
             public TimeEventArgs(bool seasonChanged, GameCalendar gameCalendar, TimeSpan currentTime, bool theSameDay) {
                 SeasonChanged = seasonChanged;

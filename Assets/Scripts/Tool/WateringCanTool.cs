@@ -13,8 +13,6 @@ namespace FarmGame.Tools {
 
         public WateringCanTool(int itemID, string data) : base(itemID, data) {
             this.ToolType = ToolType.WateringCan;
-            // this.NumberOfUses = maxUses;
-
         }
 
         public override bool IsToolStillValid() => true;
@@ -58,29 +56,22 @@ namespace FarmGame.Tools {
         //     }
         // }
 
-        private void TryInteractionWithSomething(IAgent agent)
-        {
-            foreach (var interactable in agent.InteractionDetector.PerformDetection())
-            {
-                if (interactable.CanInteract(agent))
-                {
+        private void TryInteractionWithSomething(IAgent agent) {
+            foreach (var interactable in agent.InteractionDetector.PerformDetection()) {
+                if (interactable.CanInteract(agent)) {
                     agent.BlockedInput = true;
                     agent.AgentAnimation.PlayAnimation(AnimationType.Watering);
-                    if (ToolAnimator != null)
-                    {
+                    if (ToolAnimator != null) {
                         agent.AgentAnimation.ToolAnimation.SetAnimatorController(ToolAnimator);
                         agent.AgentAnimation.ToolAnimation.PlayAnimation();
                     }
-                    agent.AgentAnimation.OnAnimationOnce.AddListener(() =>
-                    {
+                    agent.AgentAnimation.OnAnimationOnce.AddListener(() => {
                         interactable.Interact(agent);
                     });
-                    agent.AgentAnimation.OnAnimationEnd.AddListener(() =>
-                    {
+                    agent.AgentAnimation.OnAnimationEnd.AddListener(() => {
                         agent.BlockedInput = false;
                         OnFinishedAction?.Invoke(agent);
-                    }
-                    );
+                    });
                     return;
                 }
             }

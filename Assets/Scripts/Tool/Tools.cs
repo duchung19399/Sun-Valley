@@ -14,7 +14,7 @@ namespace FarmGame.Tools {
         public int ItemIndex { get; set; }
         protected Tool(int itemID, string data) {
             this.ItemIndex = itemID;
-            // RestoreSavedData(data);
+            RestoreSavedData(data);
         }
 
         public virtual void RestoreSavedData(string data) {

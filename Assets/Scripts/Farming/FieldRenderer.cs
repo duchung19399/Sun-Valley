@@ -107,6 +107,13 @@ namespace FarmGame.Farming {
                 }
             }
         }
+
+        public void ClearCropVisualizations() {
+            foreach (var crop in _cropVisualRepresentation) {
+                Destroy(crop.Value);
+            }
+            _cropVisualRepresentation.Clear();
+        }
     }
 
 }

@@ -5,10 +5,11 @@ using System.Linq;
 using FarmGame.Agent;
 using FarmGame.DataStorage;
 using FarmGame.DataStorage.Inventory;
+using FarmGame.SaveSystem;
 using UnityEngine;
 
 namespace FarmGame.Tools {
-    public class ToolsBag : MonoBehaviour {
+    public class ToolsBag : MonoBehaviour, ISavable {
         [SerializeField]
         private ItemDatabaseSO _itemDatabase;
         private int _selectedToolIndex = 0;
@@ -22,22 +23,13 @@ namespace FarmGame.Tools {
         private List<Tool> _newBag = new();
         public Tool CurrentTool => _newBag[_selectedToolIndex];
 
+        public int SaveID => SaveIDRepository.TOOLS_BAG_ID;
+
         [SerializeField]
         private int _handToolID = 4;
 
         private void Awake() {
-            for (int i = 0; i < _initialTools.Count; i++) {
-                ItemData itemData = _itemDatabase.GetItemData(_initialTools[i]);
-                string data = null;
-                int _quantity = 1;
-                if (itemData.ToolType == ToolType.SeedPlacer) {
-                    data = JsonUtility.ToJson(new SeedToolData() { cropID = itemData.CropTypeIndex, quantity = 4 });
-                    _quantity = 4;
-                }
 
-                _toolsBagInventory.AddItem(new InventoryItemData(itemData.ID, _quantity, -1, data), itemData.MaxStackSize);
-            }
-            UpdateToolsBag(_toolsBagInventory.InventoryContent);
         }
 
         private void UpdateToolsBag(IEnumerable<InventoryItemData> inventoryContent) {
@@ -55,7 +47,7 @@ namespace FarmGame.Tools {
                     Tool newTool = ToolsFactory.CreateTool(toolData, tool.data);
                     if (newTool is IQuantity quantity) {
                         quantity.Quantity = tool.count;
-                        _toolsBagInventory.AddItemAt(index, new InventoryItemData(toolData.ID, tool.count, tool.quality, newTool.GetDataToSave()));
+                        _toolsBagInventory.AddItemAt(index, new InventoryItemData(toolData.ID, tool.count, tool.quality, newTool.GetDataToSave()), false);
 
                     }
                     _newBag.Add(newTool);
@@ -103,7 +95,7 @@ namespace FarmGame.Tools {
             ItemData selectedToolData = _itemDatabase.GetItemData(_newBag[_selectedToolIndex].ItemIndex);
             if (selectedToolData.ToolType == ToolType.SeedPlacer) {
                 count = _toolsBagInventory.GetItemDataAt(_selectedToolIndex - 1).count;
-            } else if(selectedToolData.ToolType == ToolType.WateringCan) {
+            } else if (selectedToolData.ToolType == ToolType.WateringCan) {
                 count = ((WateringCanTool)CurrentTool).NumberOfUses;
             }
 
@@ -165,10 +157,46 @@ namespace FarmGame.Tools {
         }
 
         public void RestoreCurrentTool(IAgent agent) {
-            if(CurrentTool.ToolType == ToolType.WateringCan) {
+            if (CurrentTool.ToolType == ToolType.WateringCan) {
                 ((WateringCanTool)CurrentTool).Refill();
             }
             UpdateInventoryData(agent);
+        }
+
+        public string GetData() {
+            ToolBagSaveData saveData = new() {
+                selectedToolIndex = _selectedToolIndex,
+                toolsInventoryData = _toolsBagInventory.GetDataToSave()
+            };
+            return JsonUtility.ToJson(saveData);
+        }
+
+        public void RestoreData(string data) {
+            _toolsBagInventory.OnUpdateInventory += UpdateToolsBag;
+            if (string.IsNullOrEmpty(data)) {
+                for (int i = 0; i < _initialTools.Count; i++) {
+                    ItemData itemData = _itemDatabase.GetItemData(_initialTools[i]);
+                    string toolData = null;
+                    int _quantity = 1;
+                    if (itemData.ToolType == ToolType.SeedPlacer) {
+                        toolData = JsonUtility.ToJson(new SeedToolData() { cropID = itemData.CropTypeIndex, quantity = 4 });
+                        _quantity = 4;
+                    }
+
+                    _toolsBagInventory.AddItem(new InventoryItemData(itemData.ID, _quantity, -1, toolData), itemData.MaxStackSize, false);
+                }
+                UpdateToolsBag(_toolsBagInventory.InventoryContent);
+                return;
+            }
+            ToolBagSaveData loadedData = JsonUtility.FromJson<ToolBagSaveData>(data);
+            _selectedToolIndex = loadedData.selectedToolIndex;
+            _toolsBagInventory.RestoreSaveData(loadedData.toolsInventoryData);
+        }
+
+        [Serializable]
+        public struct ToolBagSaveData {
+            public int selectedToolIndex;
+            public string toolsInventoryData;
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using FarmGame.DataStorage;
@@ -22,9 +23,9 @@ namespace FarmGame.Farming {
         public int Progress { get; set; }
         public int Regress { get; set; }
         public int ID { get; set; }
-        public bool Ready {get; set;}
-        public bool Dead {get; set;}
-        public int GrowthLevel {get; set;} = 0;
+        public bool Ready { get; set; }
+        public bool Dead { get; set; }
+        public int GrowthLevel { get; set; } = 0;
 
         public Crop(int id) {
             ID = id;
@@ -43,5 +44,42 @@ namespace FarmGame.Farming {
             return 1;
         }
 
+        public string GetSaveData() {
+            CropSaveData data = new() {
+                ID = ID,
+                Watered = Watered,
+                Progress = Progress,
+                Regress = Regress,
+                Ready = Ready,
+                Dead = Dead,
+                GrowthLevel = GrowthLevel
+            };
+            return JsonUtility.ToJson(data);
+        }
+
+        public static Crop RestoreData(string data) {
+            if (string.IsNullOrEmpty(data)) return null;
+            CropSaveData saveData = JsonUtility.FromJson<CropSaveData>(data);
+            Crop crop = new(saveData.ID) {
+                Watered = saveData.Watered,
+                Progress = saveData.Progress,
+                Regress = saveData.Regress,
+                Ready = saveData.Ready,
+                Dead = saveData.Dead,
+                GrowthLevel = saveData.GrowthLevel
+            };
+            return crop;
+        }
+
+        [Serializable]
+        public struct CropSaveData {
+            public int ID;
+            public bool Watered;
+            public int Progress;
+            public int Regress;
+            public bool Ready;
+            public bool Dead;
+            public int GrowthLevel;
+        }
     }
 }

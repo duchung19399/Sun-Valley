@@ -17,18 +17,18 @@ namespace FarmGame.TimeSystem {
         public GameCalendar() {
             Season = 0;
             Day = 1;
-            WeekDay = GetWeelDay(Season, Day);
+            WeekDay = GetWeekDay(Season, Day);
             Year = 1;
         }
 
         public GameCalendar(int year, int season, int day) {
             Season = season;
             Day = day;
-            WeekDay = GetWeelDay(Season, Day);
+            WeekDay = GetWeekDay(Season, Day);
             Year = year;
         }
 
-        private int GetWeelDay(int season, int day) {
+        private int GetWeekDay(int season, int day) {
             int yearDay = (Year * SEASON_IN_YEAR + season) * DAY_IN_MONTH + day;
             return yearDay % 7;
         }
@@ -44,7 +44,11 @@ namespace FarmGame.TimeSystem {
                 }
                 OnSeasonChange?.Invoke(Year);
             }
-            WeekDay = GetWeelDay(Season, Day);
+            WeekDay = GetWeekDay(Season, Day);
+        }
+
+        public string GetSaveData() {
+            return $"{Year},{Season},{Day}";
         }
     }
 }
