@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using FarmGame.SceneTransitions;
 using UnityEngine;
@@ -14,6 +15,8 @@ namespace FarmGame.SaveSystem {
         private bool _mainMenuFlag = false;
         private List<ObjectSaveData> _unusedData = new();
 
+        public bool SaveDataPresent { get; private set; }
+
         private void Start() {
             if (_mainMenuFlag) {
                 LoadDataFromFile();
@@ -24,7 +27,29 @@ namespace FarmGame.SaveSystem {
             FindObjectOfType<SceneTransitionManager>().OnBeforeLoadScene += SaveGameState;
         }
 
-        private void SaveGameState() {
+        public void SaveDataToFile() {
+            string data = GetDataToSave();
+            if (WriteToFile(_gameSaveFileName, data)) {
+                Debug.Log("Saved data to file");
+            } else {
+                Debug.LogError("Failed to save data to file");
+            }
+        }
+
+        private bool WriteToFile(string saveFileName, string data) {
+            string fullPath = Path.Combine(Application.persistentDataPath, saveFileName + ".txt");
+            Debug.Log($"{fullPath}");
+
+            try {
+                File.WriteAllText(fullPath, data);
+                return true;
+            } catch (System.Exception e) {
+                Debug.LogError($"Failed to write to file: {e.Message}");
+            }
+            return false;
+        }
+
+        public void SaveGameState() {
             string data = GetDataToSave();
             PlayerPrefs.SetString(_saveDataKey, data);
         }
@@ -69,15 +94,30 @@ namespace FarmGame.SaveSystem {
         }
 
         private void LoadDataFromFile() {
-            string data;
-            ReadFromFile(_gameSaveFileName, out data);
+            ReadFromFile(_gameSaveFileName, out string data);
             RestoreData(data);
         }
 
-        private void ReadFromFile(string gameSaveFileName, out string data) {
-            throw new NotImplementedException();
+        private bool ReadFromFile(string gameSaveFileName, out string data) {
+            string fullPath = Path.Combine(Application.persistentDataPath, gameSaveFileName + ".txt");
+
+            data = string.Empty;
+            try {
+                data = File.ReadAllText(fullPath);
+                SaveDataPresent = string.IsNullOrEmpty(data) == false;
+                return true;
+            } catch (System.Exception e) {
+                Debug.LogError($"Failed to read from file: {e.Message}");
+            }
+            return false;
         }
 
+        public void ResetSaveData() {
+            PlayerPrefs.DeleteKey(_saveDataKey);
+            WriteToFile(_gameSaveFileName, string.Empty);
+            _unusedData.Clear();
+            // SaveDataPresent = false;
+        }
 
         [Serializable]
         public struct ObjectSaveData {

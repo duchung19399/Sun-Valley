@@ -894,8 +894,8 @@ TextureImporter:
         y: 241
         width: 14
         height: 15
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.7}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1021,7 +1021,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1045,6 +1045,7 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       atlas_16x 2_0: -436890878
+      atlas_16x 2_1: -461906664
       atlas_16x_0: -1842463826
       atlas_16x_1: 449045020
       atlas_16x_10: -816159911

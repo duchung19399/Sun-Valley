@@ -25,7 +25,7 @@ namespace FarmGame.SceneTransitions {
         }
 
         public string GetData() {
-            SaveData saveData = new();
+            SaveData saveData = new() {TransitionID = -1};
             foreach (SceneTransitionTrigger trigger in _transitionTriggers) {
                 if (trigger.Triggered) {
                     saveData = new() {
@@ -53,7 +53,7 @@ namespace FarmGame.SceneTransitions {
                         return;
                     }
                 }
-                Debug.LogError($"SceneTransitionTrigger with ID {dataToLoad.TransitionID} not found.", gameObject);
+                Debug.LogWarning($"SceneTransitionTrigger with ID {dataToLoad.TransitionID} not found.", gameObject);
             }
         }
 

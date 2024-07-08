@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using FarmGame.DataStorage;
@@ -16,6 +17,19 @@ namespace FarmGame.Tools {
             tool.ToolAnimator = data.ToolAnimator;
             tool.ToolRange = data.ToolRange;
             return tool;
+        }
+
+        public static string GetToolData(ItemData itemDescription, int quantity = 1) {
+            if(itemDescription.ToolType == ToolType.SeedPlacer) {
+                return JsonUtility.ToJson(new SeedToolData {
+                    cropID = itemDescription.CropTypeIndex,
+                    quantity = quantity
+                });
+            }
+            if(itemDescription.ToolType == ToolType.WateringCan) {
+                return "0";
+            }
+            return null;
         }
     }
 }

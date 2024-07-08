@@ -29,7 +29,10 @@ namespace FarmGame.Tools {
         private int _handToolID = 4;
 
         private void Awake() {
-
+            _toolsBagInventory.OnUpdateInventory += (inventoryContent) => {
+                UpdateToolsBag(inventoryContent);
+                SendUpdateMessage();
+            };
         }
 
         private void UpdateToolsBag(IEnumerable<InventoryItemData> inventoryContent) {
@@ -192,6 +195,8 @@ namespace FarmGame.Tools {
             _selectedToolIndex = loadedData.selectedToolIndex;
             _toolsBagInventory.RestoreSaveData(loadedData.toolsInventoryData);
         }
+
+        public Inventory GetInventory() => _toolsBagInventory;
 
         [Serializable]
         public struct ToolBagSaveData {

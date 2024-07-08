@@ -8,15 +8,15 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 namespace FarmGame.SellSystem {
-    public class SellBoxController : MonoBehaviour {
+    public class StorageBoxController : MonoBehaviour {
         [SerializeField]
         private InputReader _inputReader;
         [SerializeField]
-        private GameObject _sellBoxCanvas;
+        private GameObject _storageBoxCanvas;
         [SerializeField]
         private PauseTimeControllerSO _pauseTimeControllerSO;
         [SerializeField]
-        private InventoryRendererUI _playerInventoryRenderer, _sellBoxInventoryRenderer;
+        private InventoryRendererUI _playerInventoryRenderer, _storageBoxInventoryRenderer;
         [SerializeField]
         private Inventory _sellBoxInventory;
         private Inventory _playerInventory;
@@ -25,21 +25,21 @@ namespace FarmGame.SellSystem {
         private ItemDatabaseSO _itemDatabase;
 
         [SerializeField]
-        private ItemSelectionUI _playerItemSelection, _sellBoxItemSelection;
+        private ItemSelectionUI _playerItemSelection, _storageBoxItemSelection;
         [SerializeField]
         private ItemDescriptionUI _itemDescriptionUI;
         private Inventory _currentlySelectedInventory;
 
         [SerializeField]
-        private ItemInteractUI _playerInteractor, _sellBoxInteractor;
+        private ItemInteractUI _playerInteractor, _storageBoxInteractor;
 
-        public void PrepareSellBox(Inventory inventory) {
+        public void PrepareStorageBox(Inventory inventory) {
             _inputReader.EnableUIInput();
             _inputReader.UIExitEvent += ExitUI;
-            _sellBoxCanvas.SetActive(true);
+            _storageBoxCanvas.SetActive(true);
 
             ConnectToPlayerInventory(inventory);
-            PrepareSellBoxInventory();
+            PrepareStorageInventory();
 
             _currentlySelectedInventory = _playerInventory;
             _playerItemSelection.EnableController(_inputReader);
@@ -65,10 +65,10 @@ namespace FarmGame.SellSystem {
             UpdateDescription(selectedWindow.SelectedItem);
         }
 
-        private void PrepareSellBoxInventory() {
-            _sellBoxInventory.OnUpdateInventory += UpdateSellBoxInventoryUI;
-            _sellBoxInventoryRenderer.PrepareItemsToShow(_sellBoxInventory.Capacity);
-            UpdateSellBoxInventoryUI(_sellBoxInventory.InventoryContent);
+        private void PrepareStorageInventory() {
+            _sellBoxInventory.OnUpdateInventory += UpdateStorageInventoryUI;
+            _storageBoxInventoryRenderer.PrepareItemsToShow(_sellBoxInventory.Capacity);
+            UpdateStorageInventoryUI(_sellBoxInventory.InventoryContent);
         }
 
         public void UpdateDescription(int selectedItemIndex) {
@@ -83,35 +83,35 @@ namespace FarmGame.SellSystem {
 
         public void SwapWindow(ItemSelectionUI selectedWindow) {
             _playerInventoryRenderer.ResetAllSelection(true);
-            _sellBoxInventoryRenderer.ResetAllSelection(true);
+            _storageBoxInventoryRenderer.ResetAllSelection(true);
 
             _playerItemSelection.DisableController(_inputReader);
-            _sellBoxItemSelection.DisableController(_inputReader);
+            _storageBoxItemSelection.DisableController(_inputReader);
 
             _playerInteractor.DisableController(_inputReader);
-            _sellBoxInteractor.DisableController(_inputReader);
+            _storageBoxInteractor.DisableController(_inputReader);
 
             selectedWindow.EnableController(_inputReader);
-            if (selectedWindow == _sellBoxItemSelection) {
-                _sellBoxInteractor.EnableController(_inputReader);
+            if (selectedWindow == _storageBoxItemSelection) {
+                _storageBoxInteractor.EnableController(_inputReader);
 
                 _currentlySelectedInventory = _sellBoxInventory;
                 int itemIndexToSelect = _playerItemSelection.SelectedItem / _playerInventoryRenderer.RowSize * _playerInventoryRenderer.RowSize;
                 itemIndexToSelect = Mathf.Clamp(itemIndexToSelect, 0, _sellBoxInventory.Capacity - 1);
-                _sellBoxItemSelection.SelectItemAt(itemIndexToSelect);
+                _storageBoxItemSelection.SelectItemAt(itemIndexToSelect);
             } else {
                 _playerInteractor.EnableController(_inputReader);
 
                 _currentlySelectedInventory = _playerInventory;
-                int itemIndexToSelect = _sellBoxItemSelection.SelectedItem + (_sellBoxInventoryRenderer.RowSize - 1);
+                int itemIndexToSelect = _storageBoxItemSelection.SelectedItem + (_storageBoxInventoryRenderer.RowSize - 1);
 
                 itemIndexToSelect = Mathf.Clamp(itemIndexToSelect, 0, _playerInventory.Capacity - 1);
                 _playerItemSelection.SelectItemAt(itemIndexToSelect);
             }
         }
 
-        private void UpdateSellBoxInventoryUI(IEnumerable<InventoryItemData> inventoryContent) {
-            UpdateUI(inventoryContent, _sellBoxInventoryRenderer);
+        private void UpdateStorageInventoryUI(IEnumerable<InventoryItemData> inventoryContent) {
+            UpdateUI(inventoryContent, _storageBoxInventoryRenderer);
         }
 
         private void UpdateUI(IEnumerable<InventoryItemData> inventoryContent, InventoryRendererUI inventoryRenderer) {
@@ -142,12 +142,12 @@ namespace FarmGame.SellSystem {
 
         private void ExitUI() {
             _playerItemSelection.DisableController(_inputReader);
-            _sellBoxItemSelection.DisableController(_inputReader);
+            _storageBoxItemSelection.DisableController(_inputReader);
             _playerInteractor.DisableController(_inputReader);
-            _sellBoxInteractor.DisableController(_inputReader);
+            _storageBoxInteractor.DisableController(_inputReader);
 
 
-            _sellBoxCanvas.SetActive(false);
+            _storageBoxCanvas.SetActive(false);
             _pauseTimeControllerSO.SetTimePause(false);
             _inputReader.EnablePlayerInput();
             _inputReader.UIExitEvent -= ExitUI;
