@@ -60,7 +60,6 @@ public class InputReader : ScriptableObject, GameInput.IPlayerActions, GameInput
         _gameInput.Player.Enable();
         _gameInput.UI.Disable();
     }
-
     public void EnableUIInput() {
         _gameInput.UI.Enable();
         _gameInput.Player.Disable();
